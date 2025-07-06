@@ -16,7 +16,12 @@ public class Message {
         this.content = content;
         this.timestamp = System.currentTimeMillis();
     }
-
+    public Message(String id, String topic, String content, long timestamp){
+        this.id = id;
+        this.topic = topic;
+        this.content = content;
+        this.timestamp = timestamp;
+    }
     public String getId() {
         return id;
     }
