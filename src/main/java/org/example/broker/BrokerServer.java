@@ -40,6 +40,13 @@ public class BrokerServer {
                : null;
     }
 
+    public Message getMessageAtOffset(String topic, int offset){
+        if(topicQueues.containsKey(topic)){
+           return topicQueues.get(topic).poll();
+        }
+        return null;
+    }
+
     private void loadFromDisk(){
         try{
             BufferedReader reader = new BufferedReader(new FileReader("commit.log"));
