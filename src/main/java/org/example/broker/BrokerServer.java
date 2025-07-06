@@ -3,6 +3,7 @@ package org.example.broker;
 
 import org.example.model.Message;
 import org.example.queue.MessageQueue;
+import org.example.storage.CommitLog;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -13,13 +14,16 @@ import java.util.Map;
 public class BrokerServer {
 
     private Map<String, MessageQueue> topicQueues;
+    private CommitLog commitLog;
 
     public BrokerServer(){
         this.topicQueues = new HashMap<>();
+        this.commitLog = new CommitLog("commit.log");
         loadFromDisk();
     }
 
     public void receive(Message message){
+        commitLog.append(message);
         if(topicQueues.containsKey(message.getTopic())){
             MessageQueue messageQueue = topicQueues.get(message.getTopic());
             messageQueue.push(message);
